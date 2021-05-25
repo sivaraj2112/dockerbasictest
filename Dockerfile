@@ -3,9 +3,12 @@ FROM debian
 RUN apt update 
 RUN apt install apt-utils wget unzip -y
 RUN apt install git -y
-RUN apt install procps -y
+RUN apt -y install procps
+#ARG url
 WORKDIR /app
+#RUN cd /app && git clone ${url}
 RUN cd /app && git clone https://github.com/heroku/java-getting-started.git
+
 
 #Create maven directory and install
 
@@ -40,9 +43,7 @@ RUN cp -Rv /tmp/apache-tomcat-9.0.46/* /usr/local/tomcat/
 RUN cp /app/java-getting-started/target/${artifact} /usr/local/tomcat/webapps/
 
 EXPOSE 8080
-ENTRYPOINT ["sh", "-c"]
-RUN chmod a+rwx -R /usr/local/tomcat/logs 
+#ENTRYPOINT ["sh", "-c"]
 RUN chmod +x /usr/local/tomcat/bin/startup.sh
-CMD ["/usr/local/tomcat/bin/startup.sh"]
-
-
+CMD /usr/local/tomcat/bin/startup.sh run
+CMD /usr/local/tomcat/bin/catalina.sh run
