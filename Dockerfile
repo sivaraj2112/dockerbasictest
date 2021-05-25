@@ -1,8 +1,9 @@
 FROM debian
 
-RUN apt update \
-    && apt install apt-utils wget unzip -y
+RUN apt update 
+RUN apt install apt-utils wget unzip -y
 RUN apt install git -y
+RUN apt -y install procps
 #ARG url
 WORKDIR /app
 #RUN cd /app && git clone ${url}
@@ -20,7 +21,6 @@ RUN mkdir -p /usr/share/maven \
     && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 
-
 #Installing OpenJdk
 
 RUN apt-get update \
@@ -29,9 +29,9 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install openjdk-8-jdk -y
 
-ARG artifactid java-getting-started
-ARG version 1.0
-ENV artifact ${artifactid}-${version}.jar
+#ARG artifactid java-getting-started
+#ARG version 1.0
+ENV artifact java-getting-started-1.0.jar
 WORKDIR /app
 RUN cd /app/java-getting-started/ && mvn package
 
