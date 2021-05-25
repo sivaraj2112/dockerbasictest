@@ -44,6 +44,8 @@ RUN cp /app/java-getting-started/target/${artifact} /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 ENTRYPOINT ["sh", "-c"]
-RUN chmod +x /usr/local/tomcat/logs/
 RUN chmod +x /usr/local/tomcat/bin/startup.sh
 CMD ["/usr/local/tomcat/bin/startup.sh"]
+
+RUN chmod 775 /usr/local/tomcat/log
+RUN touch /usr/local/tomcat/logs/catalina.out
