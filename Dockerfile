@@ -36,14 +36,21 @@ WORKDIR /app
 RUN cd /app/java-getting-started/ && mvn package
 
 #Install tomcat
+Run groupadd tomcat
+Run useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
 RUN mkdir /usr/local/tomcat
 RUN cd /tmp && wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.46/bin/apache-tomcat-9.0.46.tar.gz
 RUN cd /tmp && tar -zxvf apache-tomcat-9.0.46.tar.gz
 RUN cp -Rv /tmp/apache-tomcat-9.0.46/* /usr/local/tomcat/
 RUN cp /app/java-getting-started/target/${artifact} /usr/local/tomcat/webapps/
+Run chgrp -R tomcat /usr/local/tomcat
+Run chmod -R g+r /usr/local/tomcat/conf
+Run chmod g+x /usr/local/tomcat/conf
+Run chown -R tomcat /usr/local/tomcat/webapps /usr/local/tomcat/work /usr/local/tomcat/temp /usr/local/tomcat/logs
 
 EXPOSE 8080
 #ENTRYPOINT ["sh", "-c"]
 RUN chmod +x /usr/local/tomcat/bin/startup.sh
 CMD /usr/local/tomcat/bin/startup.sh run
+RUN chmod +x /usr/local/tomcat/bin/catalina.sh
 CMD /usr/local/tomcat/bin/catalina.sh run
