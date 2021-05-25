@@ -1,5 +1,7 @@
 FROM debian
 
+USER root
+
 RUN apt update 
 RUN apt install apt-utils wget unzip -y
 RUN apt install git -y
