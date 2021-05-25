@@ -49,8 +49,8 @@ Run chmod g+x /usr/local/tomcat/conf
 Run chown -R tomcat /usr/local/tomcat/webapps /usr/local/tomcat/work /usr/local/tomcat/temp /usr/local/tomcat/logs
 
 EXPOSE 8080
-#ENTRYPOINT ["sh", "-c"]
+ENTRYPOINT ["sh", "-c"]
 RUN chmod +x /usr/local/tomcat/bin/startup.sh
 CMD /usr/local/tomcat/bin/startup.sh run
-RUN chmod +x /usr/local/tomcat/bin/catalina.sh
+RUN chmod 777 /usr/local/tomcat/bin/catalina.sh
 CMD /usr/local/tomcat/bin/catalina.sh run
